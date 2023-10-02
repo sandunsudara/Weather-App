@@ -327,11 +327,11 @@ td {
 
     .locationNamePart{
         width: 340px;
-        height: 80px;
+        height: 70px;
     }
 
     #locationName{
-        font-size: 60px;
+        font-size: 50px;
     }
 
     #section_02 {
