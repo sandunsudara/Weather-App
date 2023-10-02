@@ -279,3 +279,47 @@ td {
     }
 }
 
+@media screen and (max-width: 425px) {
+    #title {
+        font-size: 25px;
+    }
+    /* //////////////////////////////city Name////////////////////// */
+    .locationNamePart{
+        width: 380px;
+        height: 100px;
+    }
+
+    #locationName{
+        font-size: 80px;
+    }
+    /* ///////////////////////////////////////////////////// */
+
+    /* ////////////////////////serach Part//////////////////////// */
+    #serachFiled {
+        width: 280px;
+    }
+
+    #serachItem {
+        width: fit-content;
+    }
+    /* ////////////////////////////////////////////////////////////// */
+
+    #section_02 {
+        margin-left: 20px;
+        width: 375px;
+        height: 500px;
+        margin-bottom: 30px;
+    }
+
+    #map {
+        height: 350px;
+        width: 375px;
+        margin: auto;
+    }
+
+
+    #nextForecast{
+        width: 80%;
+    }
+}
+
