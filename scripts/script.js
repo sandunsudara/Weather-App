@@ -37,7 +37,7 @@ function getForecast() {
     forecast = $("#nextForecast");
     $.ajax({
         method: "GET",
-        url: "http://api.weatherapi.com/v1/forecast.json?key=737aa0e9159b46fba87151915232509&q=" + tempLocation + "&days=5",
+        url: "https://api.weatherapi.com/v1/forecast.json?key=737aa0e9159b46fba87151915232509&q=" + tempLocation + "&days=5",
         success: (resp) => {
             console.log(resp);
             resp.forecast.forecastday.forEach(element => {
@@ -101,7 +101,7 @@ function btnFindAction(lat, lng) {
     tempLocation = location;
     $.ajax({
         method: "GET",
-        url: "http://api.weatherapi.com/v1/current.json?key=737aa0e9159b46fba87151915232509&q=" + location,
+        url: "https://api.weatherapi.com/v1/current.json?key=737aa0e9159b46fba87151915232509&q=" + location,
         success: (resp) => {
             console.log(resp);
             locationName.text(resp.location.name);
@@ -132,7 +132,7 @@ function setLocationInMap(lat, ing) {
     map = L.map('map').setView([lat, ing], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 10,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
     const marker = L.marker([lat, ing]).addTo(map);
     marker.setLatLng([lat, ing]).update();
