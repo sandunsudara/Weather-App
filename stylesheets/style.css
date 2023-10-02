@@ -241,3 +241,17 @@ td {
     }
 }
 
+@media screen and (max-width: 1024px) {
+    #section_02 {
+        margin-left: 262px;
+        margin-bottom: 30px;
+    }
+
+    #map {
+        margin: auto;
+    }
+    #nextForecast{
+        width: 67%;
+    }
+}
+
