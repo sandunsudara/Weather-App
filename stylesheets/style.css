@@ -255,3 +255,27 @@ td {
     }
 }
 
+@media screen and (max-width: 768px) {
+    #section_02 {
+        margin-left: 134px;
+        margin-bottom: 30px;
+    }
+
+    #nextForecast{
+        width: 90%;
+    }
+
+    #map {
+        margin: auto;
+        width: 680px;
+    }
+
+    #serachFiled {
+        width: 500px;
+    }
+
+    #serachItem {
+        width: fit-content;
+    }
+}
+
