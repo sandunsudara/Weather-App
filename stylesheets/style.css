@@ -222,3 +222,22 @@ td {
     margin: auto;
 }
 
+/* ////////////////////////////////media quivery/////////////////////////////////  */
+
+@media screen and (max-width: 1320px) {
+    #section_02 {
+        margin-left: 410px;
+        margin-bottom: 30px;
+    }
+
+    #map {
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    #nextForecast{
+        width: 71%;
+    }
+}
+
