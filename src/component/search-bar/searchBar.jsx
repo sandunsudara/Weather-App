@@ -9,6 +9,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import GeoDBService from "../../service/GeoDBService.js";
 import debounce from "lodash.debounce";
+import ImageService from "../../service/ImageService.js";
 
 const SearchBarWithResults = ({setSearching}) => {
     const theme = useTheme();
@@ -58,10 +59,20 @@ const SearchBarWithResults = ({setSearching}) => {
         }
     };
 
+    const getImage = async (value) => {
+        try{
+            console.log(value)
+            const response = await ImageService.getImage(value);
+            console.log(response);
+        }catch(e){
+            console.log(e.message)
+        }
+    }
+
     // Handle option selection
-    const handleOptionChange = (event, newValue) => {
+    const handleOptionChange  = (event, newValue) => {
         if (newValue) {
-            setSearchTerm(newValue.displayName);
+            getImage(newValue.value);
         }
     };
 
