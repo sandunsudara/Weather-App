@@ -5,6 +5,8 @@ import SmallWeatherCard from "../../component/small-weather-card/smallWeatherCar
 import React, {useEffect, useState} from "react";
 import {WbSunny as Sun,} from "@mui/icons-material";
 import WeatherCard from "../../component/weather-card/weatherCard.jsx";
+import WeatherService from "../../service/WeatherService.js";
+import ImageService from "../../service/ImageService.js";
 
 
 const getWeatherIcon = (condition) => {
@@ -139,12 +141,18 @@ const MainView = ({selectedPlace}) => {
             sunset: "7:48 PM",
         },
     ];
+    const [mainWeatherData, setMainWeatherData] = useState(null)
+    const [locationData, setLocationData] = useState(null)
+    const [imageData, setImageData] = useState(null);
 
-    const getImage = async (value) => {
+    const getImage = async () => {
         try {
-            console.log(value)
-            const response = await ImageService.getImage(value);
-            console.log(response);
+            const response = await ImageService.getImage(selectedPlace.displayName);
+            console.log(response.data.results[0].urls.regular);
+            setImageData({
+                url: response.data.results[0].urls.regular,
+                name: response.data.results[0].alt_description,
+            });
         } catch (e) {
             console.log(e.message)
         }
@@ -152,16 +160,27 @@ const MainView = ({selectedPlace}) => {
 
     const fetchWeatherData = async () => {
         try{
-
+            const response = await WeatherService.fetchWeatherData(selectedPlace.latitude, selectedPlace.longitude);
+            setMainWeatherData(response.data.current);
+            setLocationData(response.data.location);
         }catch(e){
             console.log(e.message);
         }
     }
 
     useEffect(() => {
-        if(selectedPlace){
-            console.log(selectedPlace)
-        }
+        const fetchAllData = async () => {
+            if (selectedPlace) {
+                try {
+                    await fetchWeatherData();
+                    await getImage();
+                } catch (error) {
+                    console.log('Error in fetching data:', error.message);
+                }
+            }
+        };
+
+        fetchAllData();
     },[selectedPlace]);
 
 
@@ -180,8 +199,8 @@ const MainView = ({selectedPlace}) => {
                     }}
                 >
                     <img
-                        src="https://images.unsplash.com/photo-1513010072333-4c73650e4359"
-                        alt="Lotus Temple"
+                        src={imageData?.url}
+                        alt={imageData?.name}
                         style={{width: '100%', height: '100%', objectFit: 'cover'}}
                     />
                     <Box
@@ -191,25 +210,27 @@ const MainView = ({selectedPlace}) => {
                             left: 0,
                             p: 3,
                             width: '100%',
-                            background:
-                                'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))',
+                            background: 'linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0))',
                             color: theme.palette.primary.contrastText,
                         }}
                     >
                         <Stack direction="row" alignItems="center" spacing={1} mb={0.5}>
-                            <MapIcon sx={{fontSize: 16, color: theme.palette.primary.contrastText}}/>
-                            <Typography variant="body2" color={theme.palette.primary.contrastText}>
-                                Ahmedabad, Gujarat
+                            <MapIcon sx={{fontSize: 16, color: theme.palette.text.primary}}/>
+                            <Typography variant="body2" color={theme.palette.text.primary} textAlign="bottom"
+                                        fontSize={'1.3rem'} pt={0.5} fontWeight={700}>
+                                {locationData?.name}, {locationData?.region}
                             </Typography>
                         </Stack>
                         <Typography
                             variant="caption"
                             sx={{
-                                color: theme.palette.primary.contrastText,
-                                opacity: 0.75
+                                color: theme.palette.text.primary,
+                                fontSize: '1rem',
+                                opacity: 0.75,
+                                ml:3
                             }}
                         >
-                            Located in India
+                            Located in {locationData?.country}
                         </Typography>
                     </Box>
                 </Box>

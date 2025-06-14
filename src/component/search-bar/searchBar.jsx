@@ -48,7 +48,6 @@ const SearchBarWithResults = ({setSearching , selectedPlace , setSelectedPlace})
 
     // Handle input change for typing
     const handleInputChange = (event, value, reason) => {
-        setSelectedPlace(value);
         if (value && reason === "input") {
             debouncedGetPlace(value);
         }
