@@ -11,9 +11,8 @@ import GeoDBService from "../../service/GeoDBService.js";
 import debounce from "lodash.debounce";
 import ImageService from "../../service/ImageService.js";
 
-const SearchBarWithResults = ({setSearching}) => {
+const SearchBarWithResults = ({setSearching , selectedPlace , setSelectedPlace}) => {
     const theme = useTheme();
-    const [searchTerm, setSearchTerm] = useState('');
     const abortControllerRef = useRef(null);
     const [places, setPlaces] = useState([]);
 
@@ -31,12 +30,11 @@ const SearchBarWithResults = ({setSearching}) => {
                 try {
                     const response = await GeoDBService.getPlace(value, controller.signal);
                     setPlaces(
-                        response.data.map((item, index) => ({
-                            value: item.name,
-                            displayName: item.type === "CITY"
+                        response.data.map((item) => ({
+                            ...item,
+                            displayName: item.type !== "COUNTRY"
                                 ? `${item.name}, ${item.country}`
                                 : item.name,
-                            length:index
                         }))
                     );
                 } catch (e) {
@@ -50,7 +48,7 @@ const SearchBarWithResults = ({setSearching}) => {
 
     // Handle input change for typing
     const handleInputChange = (event, value, reason) => {
-        setSearchTerm(value);
+        setSelectedPlace(value);
         if (value && reason === "input") {
             debouncedGetPlace(value);
         }
@@ -59,20 +57,11 @@ const SearchBarWithResults = ({setSearching}) => {
         }
     };
 
-    const getImage = async (value) => {
-        try{
-            console.log(value)
-            const response = await ImageService.getImage(value);
-            console.log(response);
-        }catch(e){
-            console.log(e.message)
-        }
-    }
 
     // Handle option selection
     const handleOptionChange  = (event, newValue) => {
         if (newValue) {
-            getImage(newValue.value);
+            setSelectedPlace(newValue);
         }
     };
 
@@ -84,7 +73,7 @@ const SearchBarWithResults = ({setSearching}) => {
                 getOptionLabel={(option) =>
                     typeof option === 'string' ? option : (option.displayName || '')
                 }
-                inputValue={searchTerm}
+                inputValue={selectedPlace}
                 onInputChange={handleInputChange}
                 onChange={handleOptionChange}
                 PaperComponent={({ children }) => (

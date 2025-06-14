@@ -8,6 +8,7 @@ import MainView from "./page/main/MainView.jsx";
 function App() {
     const [mode, setMode] = useState('light')
     const theme = useMemo(() => getTheme(mode), [mode])
+    const [selectedPlace , setSelectedPlace] = useState();
 
     const toggleColorMode = () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
@@ -16,8 +17,8 @@ function App() {
   return (
       <ThemeProvider theme={theme}>
           <CssBaseline/>
-          <NavBar toggleColorMode={toggleColorMode}/>
-          <MainView/>
+          <NavBar toggleColorMode={toggleColorMode} selectedPlace={selectedPlace}   setSelectedPlace={setSelectedPlace}/>
+          <MainView selectedPlace={selectedPlace}/>
 
       </ThemeProvider>
   )

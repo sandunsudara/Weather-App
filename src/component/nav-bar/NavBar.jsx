@@ -6,7 +6,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import SearchBarWithResults from "../search-bar/searchBar.jsx";
 
 
-const NavBar = ({toggleColorMode}) => {
+const NavBar = ({toggleColorMode ,selectedPlace ,setSelectedPlace }) => {
     const theme = useTheme();
     const [searching, setSearching] = useState(false);
 
@@ -37,7 +37,7 @@ const NavBar = ({toggleColorMode}) => {
                     sx={{color: theme.palette.text.primary, verticalAlign: 'middle' , ml:2}}
                 />
             )}
-            <SearchBarWithResults setSearching={setSearching} />
+            <SearchBarWithResults setSearching={setSearching} selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
             <IconButton
                 onClick={toggleColorMode}
                 sx={{

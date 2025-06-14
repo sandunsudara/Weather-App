@@ -2,7 +2,7 @@ import {Box, Button, Grid, Stack, Typography, useTheme} from "@mui/material";
 import MapIcon from '@mui/icons-material/LocationOn';
 import {Cloud} from 'lucide-react';
 import SmallWeatherCard from "../../component/small-weather-card/smallWeatherCard.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {WbSunny as Sun,} from "@mui/icons-material";
 import WeatherCard from "../../component/weather-card/weatherCard.jsx";
 
@@ -54,14 +54,12 @@ const getMainWeatherIcon = () => (
 );
 
 
-const MainView = () => {
+const MainView = ({selectedPlace}) => {
     const theme = useTheme();
     const [selected, setSelected] = useState('Today');
     const buttons = ['Today', 'Tomorrow', 'Week'];
-    const [selectedPlace , setSelectedPlace] = useState();
+
     const [loading, setLoading] = useState(false);
-
-
     const weeklyWeatherData = [
         {
             day: "Wednesday",
@@ -142,6 +140,29 @@ const MainView = () => {
         },
     ];
 
+    const getImage = async (value) => {
+        try {
+            console.log(value)
+            const response = await ImageService.getImage(value);
+            console.log(response);
+        } catch (e) {
+            console.log(e.message)
+        }
+    }
+
+    const fetchWeatherData = async () => {
+        try{
+
+        }catch(e){
+            console.log(e.message);
+        }
+    }
+
+    useEffect(() => {
+        if(selectedPlace){
+            console.log(selectedPlace)
+        }
+    },[selectedPlace]);
 
 
     return (
